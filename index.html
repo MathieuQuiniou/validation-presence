@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charte Tuteur - Eddmon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bleu: #3739da;
+      --orange: #ff6f00;
+      --vert: #10b981;
+      --blanc: #fff;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: white;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      /* Désactive le scroll vertical dans l'iframe */
+      overflow-y: hidden;
+    }
+
+    html {
+      overflow: hidden;
+    }
+
+    .container {
+      background: white;
+      border-radius: 16px;
+      max-width: 600px;
+      width: 100%;
+      padding: 40px;
+      position: relative;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .logo-img {
+      height: 40px;
+    }
+
+    h1 {
+      color: var(--bleu);
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      color: #666;
+      font-size: 14px;
+      font-weight: 300;
+      margin-top: 10px;
+    }
+
+    .progress-bar {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 0;
+      position: relative;
+    }
+
+    .progress-bar::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #e0e0e0;
+      z-index: 0;
+    }
+
+    .progress-bar::after {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 0;
+      height: 2px;
+      background: var(--bleu);
+      z-index: 1;
+      transition: width 0.3s ease;
+    }
+
+    .progress-bar.step-1::after { width: 0%; }
+    .progress-bar.step-2::after { width: 25%; }
+    .progress-bar.step-3::after { width: 50%; }
+    .progress-bar.step-4::after { width: 75%; }
+    .progress-bar.step-5::after { width: 100%; }
+
+    .progress-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .step-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+      color: #999;
+      transition: all 0.3s ease;
+    }
+
+    .progress-step.active .step-circle,
+    .progress-step.completed .step-circle {
+      border-color: var(--bleu);
+      background: var(--bleu);
+      color: white;
+    }
+
+    .step-label {
+      margin-top: 8px;
+      font-size: 11px;
+      color: #999;
+      font-weight: 500;
+      text-align: center;
+      max-width: 80px;
+    }
+
+    .progress-step.active .step-label {
+      color: var(--bleu);
+      font-weight: 600;
+    }
+
+    .form-step {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .step-badge {
+      display: inline-block;
+      background: #e6f7f0;
+      color: var(--vert);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .step-title {
+      color: var(--bleu);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .step-content {
+      color: #333;
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .step-content p {
+      margin-bottom: 12px;
+    }
+
+    .step-content strong {
+      color: var(--bleu);
+      font-weight: 600;
+    }
+
+    .step-content em {
+      color: #666;
+      font-style: italic;
+    }
+
+    .note-box {
+      background: #fff7ed;
+      border-left: 4px solid var(--orange);
+      padding: 12px 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-size: 13px;
+      color: #7c2d12;
+      line-height: 1.6;
+    }
+
+    .accept-box {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 20px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .accept-box input[type="checkbox"] {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .accept-box label {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.6;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .dispo-grid {
+      margin: 20px 0;
+    }
+
+    .dispo-header {
+      display: grid;
+      grid-template-columns: 80px repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--bleu);
+      text-align: center;
+    }
+
+    .dispo-header div:first-child {
+      text-align: left;
+    }
+
+    .dispo-row {
+      display: grid;
+      grid-template-columns: 80px repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+      align-items: center;
+    }
+
+    .dispo-day {
+      font-weight: 600;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .dispo-btn {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 20px;
+      transition: all 0.2s ease;
+      background: #10b981;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .dispo-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .dispo-btn.inactive {
+      background: #ef4444;
+    }
+
+    .ville-selection {
+      margin: 20px 0;
+    }
+
+    .ville-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .ville-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      background: #f0f9ff;
+      border: 2px solid #bae6fd;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .ville-option:hover {
+      background: #e0f2fe;
+      border-color: var(--bleu);
+    }
+
+    .ville-option input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .ville-option label {
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+      user-select: none;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    button {
+      flex: 1;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--bleu);
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #2a2bb5;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(55, 57, 218, 0.3);
+    }
+
+    .btn-primary:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--bleu);
+      border: 1px solid var(--bleu);
+    }
+
+    .btn-secondary:hover {
+      background: #f5f6ff;
+    }
+
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-message.active {
+      display: block;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background: var(--vert);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: white;
+    }
+
+    .success-title {
+      color: var(--bleu);
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .success-text {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .success-stamp {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: 2px solid var(--bleu);
+      border-radius: 12px;
+      color: var(--bleu);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      .step-label {
+        font-size: 9px;
+      }
+
+      .button-group {
+        flex-direction: column;
+      }
+
+      .dispo-header,
+      .dispo-row {
+        grid-template-columns: 60px repeat(3, 1fr);
+        gap: 4px;
+      }
+
+      .dispo-day {
+        font-size: 12px;
+      }
+
+      .dispo-btn {
+        padding: 8px;
+        font-size: 16px;
+      }
+
+      .dispo-header {
+        font-size: 11px;
+      }
+
+      .ville-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header" id="mainHeader">
+      <h1>Charte Tuteur Eddmon</h1>
+      <div class="subtitle">Merci de lire chaque point et de valider étape par étape.</div>
+    </div>
+
+    <div class="progress-bar step-1" id="progressBar">
+      <div class="progress-step active" data-step="1">
+        <div class="step-circle">1</div>
+        <div class="step-label">Esprit & posture</div>
+      </div>
+      <div class="progress-step" data-step="2">
+        <div class="step-circle">2</div>
+        <div class="step-label">Offres & candidatures</div>
+      </div>
+      <div class="progress-step" data-step="3">
+        <div class="step-circle">3</div>
+        <div class="step-label">Statut & démarches</div>
+      </div>
+      <div class="progress-step" data-step="4">
+        <div class="step-circle">4</div>
+        <div class="step-label">Engagement & activité</div>
+      </div>
+      <div class="progress-step" data-step="5">
+        <div class="step-circle">5</div>
+        <div class="step-label">Déclaration & retours</div>
+      </div>
+    </div>
+
+    <form id="charteForm">
+      <!-- Étape 1 -->
+      <div class="form-step active" data-step="1">
+        <div class="step-badge">Étape 1 / 5</div>
+        <h2 class="step-title">Esprit & posture</h2>
+        <div class="step-content">
+          <p><strong>Eddmon, c'est une structure conviviale et proche de ses tuteurs.</strong> Nous sommes là pour vous accompagner et <em>vous aider à trouver la mission de travail qui vous correspond le mieux</em>.</p>
+          <p>En revanche, c'est à vous de prendre les devants et de proposer vos services. N'oubliez pas : notre relation est avant tout professionnelle et basée sur la collaboration, dans le respect de votre indépendance. 😊</p>
+        </div>
+
+        <div class="accept-box">
+          <input type="checkbox" id="accept1" name="accept1" required>
+          <label for="accept1">Je comprends la posture attendue et j'adopte une attitude professionnelle.</label>
+        </div>
+
+        <div class="button-group">
+          <button type="button" class="btn-secondary" disabled>← Précédent</button>
+          <button type="button" class="btn-primary" onclick="nextStep()" id="nextBtn1" disabled>Continuer →</button>
+        </div>
+      </div>
+
+      <!-- Étape 2 -->
+      <div class="form-step" data-step="2">
+        <div class="step-badge">Étape 2 / 5</div>
+        <h2 class="step-title">Offres & candidatures</h2>
+        <div class="step-content">
+          <p><strong>Eddmon est la plateforme qui vous met en relation avec des familles</strong> que nous accompagnons avec professionnalisme. Pour garantir une collaboration réussie, nous vous invitons à postuler uniquement aux offres qui vous correspondent parfaitement, <em>après lecture complète des intitulés</em> (disponibilités, lieux, matière, profil de l'élève).</p>
+          <p>Merci de <strong>lire attentivement chaque descriptif</strong> ; sinon, c'est une perte de temps, aussi bien pour vous que pour nous 🙂.</p>
+        </div>
+
+        <div class="accept-box">
+          <input type="checkbox" id="accept2" name="accept2" required>
+          <label for="accept2">Je lirai systématiquement chaque descriptif avant de postuler.</label>
+        </div>
+
+        <div class="button-group">
+          <button type="button" class="btn-secondary" onclick="prevStep()">← Précédent</button>
+          <button type="button" class="btn-primary" onclick="nextStep()" id="nextBtn2" disabled>Continuer →</button>
+        </div>
+      </div>
+
+      <!-- Étape 3 -->
+      <div class="form-step" data-step="3">
+        <div class="step-badge">Étape 3 / 5</div>
+        <h2 class="step-title">Statut & démarches</h2>
+        <div class="step-content">
+          <p>Le <strong>statut auto-entrepreneur est obligatoire</strong>. Sans celui-ci, vous ne pouvez pas être payé. Nous comptons sur vous pour <strong>effectuer les démarches lors du recrutement</strong>.</p>
+          <div class="note-box">
+            <strong>ℹ️ Bon à savoir :</strong> Les démarches sont simples et/ou gratuites depuis <a href="https://eddmon.notion.site/Cr-er-son-statut-c6ac751471354e33a4ca4816c38c8dfa" target="_blank" rel="noopener noreferrer">notre guide pour devenir auto-entrepreneur</a>. Vous recevrez votre SIRET sous 48h. N'hésitez pas à nous contacter si vous avez besoin d'aide !
+          </div>
+        </div>
+
+        <div class="accept-box">
+          <input type="checkbox" id="accept3" name="accept3" required>
+          <label for="accept3">Je confirme comprendre que le statut auto-entrepreneur est requis et m'engage à effectuer les démarches.</label>
+        </div>
+
+        <div class="button-group">
+          <button type="button" class="btn-secondary" onclick="prevStep()">← Précédent</button>
+          <button type="button" class="btn-primary" onclick="nextStep()" id="nextBtn3" disabled>Continuer →</button>
+        </div>
+      </div>
+
+      <!-- Étape 4 -->
+      <div class="form-step" data-step="4">
+        <div class="step-badge">Étape 4 / 5</div>
+        <h2 class="step-title">Engagement & activité</h2>
+        <div class="step-content">
+          <p>Si vous vous engagez auprès d'Eddmon, <strong>c'est un travail comme un autre</strong> : cela demande de la rigueur et un engagement. Être inactif n'est avantageux ni pour nous ni pour les familles.</p>
+          <p>C'est pourquoi vous recevez parfois des mails et SMS de rappel, car <strong>nous vous avons fait confiance lors de votre recrutement</strong>.</p>
+        </div>
+
+        <div style="margin: 25px 0;">
+          <h3 style="color: var(--bleu); font-size: 16px; font-weight: 600; margin-bottom: 10px;">📅 Vos disponibilités</h3>
+          <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Tout est sélectionné par défaut. Décochez les créneaux où vous n'êtes <strong>pas disponible</strong>.</p>
+
+          <div class="dispo-grid">
+            <div class="dispo-header">
+              <div></div>
+              <div>Matin</div>
+              <div>Après-midi</div>
+              <div>Soir</div>
+            </div>
+
+            <div class="dispo-row">
+              <div class="dispo-day">Lun.</div>
+              <button type="button" class="dispo-btn" data-dispo="Lundi matin">👍</button>
+              <button type="button" class="dispo-btn" data-dispo="Lundi aprem">👍</button>
+              <button type="button" class="dispo-btn" data-dispo="Lundi soir">👍</button>
+            </div>
+
+            <div class="dispo-row">
+              <div class="dispo-day">Mar.</div>
+              <button type="button" class="dispo-btn" data-dispo="Mardi matin">👍</button>
+              <button type="button" class="dispo-btn" data-dispo="Mardi aprem">👍</button>
+              <button type="button" class="dispo-btn" data-dispo="Mardi soir">👍</button>
+            </div>
+
+            <div class="dispo-row">
+              <div class="dispo-day">Mer.</div>
+              <button type="button" class="dispo-btn" data-dispo="Mercredi matin">👍</button>
+              <button type="button" class="dispo-btn" data-dispo="Mercredi aprem">👍</button>
+              <button type="button" class="dispo-btn" data-dispo="Mercredi soir">👍</button>
+            </div>
+
+            <div class="dispo-row">
+              <div class="dispo-day">Jeu.</div>
+              <button type="button" class="dispo-btn" data-dispo="Jeudi matin">👍</button>
+              <button type="button" class="dispo-btn" data-dispo="Jeudi aprem">👍</button>
+              <button type="button" class="dispo-btn" data-dispo="Jeudi soir">👍</button>
+            </div>
+
+            <div class="dispo-row">
+              <div class="dispo-day">Ven.</div>
+              <button type="button" class="dispo-btn" data-dispo="Vendredi matin">👍</button>
+              <button type="button" class="dispo-btn" data-dispo="Vendredi aprem">👍</button>
+              <button type="button" class="dispo-btn" data-dispo="Vendredi soir">👍</button>
+            </div>
+
+            <div class="dispo-row">
+              <div class="dispo-day">Sam.</div>
+              <button type="button" class="dispo-btn" data-dispo="Samedi matin">👍</button>
+              <button type="button" class="dispo-btn" data-dispo="Samedi aprem">👍</button>
+              <button type="button" class="dispo-btn" data-dispo="Samedi soir">👍</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="ville-selection">
+          <h3 style="color: var(--bleu); font-size: 16px; font-weight: 600; margin-bottom: 10px;">📍 Villes où vous pouvez intervenir</h3>
+          <p style="font-size: 13px; color: #666; margin-bottom: 12px;">Sélectionnez toutes les villes qui vous conviennent.</p>
+
+          <div class="ville-grid">
+            <div class="ville-option">
+              <input type="checkbox" id="ville-paris" name="villes" value="Paris">
+              <label for="ville-paris">Paris</label>
+            </div>
+            <div class="ville-option">
+              <input type="checkbox" id="ville-lille" name="villes" value="Lille">
+              <label for="ville-lille">Lille</label>
+            </div>
+            <div class="ville-option">
+              <input type="checkbox" id="ville-lyon" name="villes" value="Lyon">
+              <label for="ville-lyon">Lyon</label>
+            </div>
+            <div class="ville-option">
+              <input type="checkbox" id="ville-autre" name="villes" value="Autre">
+              <label for="ville-autre">Autre</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="accept-box">
+          <input type="checkbox" id="accept4" name="accept4" required>
+          <label for="accept4">Je m'engage à rester actif(ve) et à répondre aux communications (mail/SMS).</label>
+        </div>
+
+        <div class="button-group">
+          <button type="button" class="btn-secondary" onclick="prevStep()">← Précédent</button>
+          <button type="button" class="btn-primary" onclick="nextStep()" id="nextBtn4" disabled>Continuer →</button>
+        </div>
+      </div>
+
+      <!-- Étape 5 -->
+      <div class="form-step" data-step="5">
+        <div class="step-badge">Étape 5 / 5</div>
+        <h2 class="step-title">Déclaration & retours famille</h2>
+        <div class="step-content">
+          <p><strong>N'oubliez pas de déclarer vos heures</strong> et de <strong>commenter chaque séance de manière sérieuse</strong>. Sans cela, les familles n'ont pas de retour, ce qui ne correspond pas à notre philosophie.</p>
+          <p>Nous voulons une <strong>communication et une transparence totales</strong> entre vous et les familles.</p>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="email" style="display: block; margin-bottom: 8px; color: var(--bleu); font-weight: 500; font-size: 14px;">
+            Votre adresse email <span style="color: var(--orange);">*</span>
+          </label>
+          <input type="email" id="email" name="email" required placeholder="votre.email@exemple.com" style="width: 100%; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 14px; transition: all 0.3s ease;">
+        </div>
+
+        <div class="accept-box">
+          <input type="checkbox" id="accept5" name="accept5" required>
+          <label for="accept5">Je déclarerai mes heures et je commenterai chaque séance sérieusement.</label>
+        </div>
+
+        <div class="button-group">
+          <button type="button" class="btn-secondary" onclick="prevStep()">← Précédent</button>
+          <button type="submit" class="btn-primary" id="submitBtn" disabled>Valider la charte ✓</button>
+        </div>
+      </div>
+    </form>
+
+    <div class="success-message" id="successMessage">
+      <div class="success-icon">✓</div>
+      <div class="success-title">🎉 Merci, charte validée !</div>
+      <div class="success-text">
+        Votre accord a bien été enregistré. Bienvenue dans l'équipe Eddmon !
+      </div>
+
+      <div style="margin: 30px 0; padding: 25px; background: #f0f9ff; border-radius: 12px; border: 1px solid #bae6fd;">
+        <img src="https://cdn.prod.website-files.com/62e7db7cc9c73e6d6a8e326b/68c976ac9c5e3b3044b5bf18_5ff42ba7cfece43fae21ffd89d33b743_Antoine.png" alt="Antoine - Responsable Tuteur" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto 15px; display: block; border: 4px solid white; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <h3 style="color: var(--bleu); font-size: 18px; font-weight: 700; margin-bottom: 8px; text-align: center;">
+          Antoine, votre responsable tuteur
+        </h3>
+        <p style="color: #666; font-size: 14px; line-height: 1.7; text-align: center; margin-bottom: 15px;">
+          Pour toutes vos questions, n'hésitez pas à contacter Antoine :
+        </p>
+        <a href="mailto:antoine@eddmon.fr" style="display: inline-block; background: var(--bleu); color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.2s ease; margin: 0 auto; display: block; width: fit-content;" onmouseover="this.style.background='#2a2bb5'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--bleu)'; this.style.transform='translateY(0)'">
+          📧 antoine@eddmon.fr
+        </a>
+      </div>
+
+      <div class="success-stamp" id="stamp">Validé —</div>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 1;
+    let heightSent = false;
+
+    // Gestion des boutons de disponibilité
+    document.querySelectorAll('.dispo-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.classList.toggle('inactive');
+        this.textContent = this.classList.contains('inactive') ? '👎' : '👍';
+      });
+    });
+
+    // Gestion des checkboxes pour activer les boutons
+    for (let i = 1; i <= 5; i++) {
+      const checkbox = document.getElementById(`accept${i}`);
+      const nextBtn = i < 5 ? document.getElementById(`nextBtn${i}`) : document.getElementById('submitBtn');
+
+      if (checkbox && nextBtn) {
+        checkbox.addEventListener('change', function() {
+          if (i === 5) {
+            const emailInput = document.getElementById('email');
+            nextBtn.disabled = !this.checked || !emailInput.value.trim();
+          } else {
+            nextBtn.disabled = !this.checked;
+          }
+        });
+      }
+    }
+
+    // Validation de l'email pour activer le bouton submit
+    const emailInput = document.getElementById('email');
+    const submitBtn = document.getElementById('submitBtn');
+    const accept5 = document.getElementById('accept5');
+
+    emailInput.addEventListener('input', function() {
+      submitBtn.disabled = !this.value.trim() || !accept5.checked;
+    });
+
+    // Préremplissage de l'email depuis l'URL
+    window.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const emailParam = urlParams.get('email');
+      if (emailParam) {
+        emailInput.value = emailParam;
+        if (accept5.checked) {
+          submitBtn.disabled = false;
+        }
+      }
+      
+      // Envoie la hauteur initiale une seule fois
+      setTimeout(sendHeight, 100);
+    });
+
+    // Fonction pour envoyer la hauteur au parent
+    function sendHeight() {
+      if (heightSent) return;
+      
+      const height = document.documentElement.scrollHeight;
+      window.parent.postMessage({
+        type: 'eddmon-charte-height',
+        height: height
+      }, '*');
+      
+      heightSent = true;
+      
+      // Réinitialise après un délai pour permettre les futurs envois
+      setTimeout(() => {
+        heightSent = false;
+      }, 500);
+    }
+
+    // Fonction pour scroller en haut de la page parent
+    function scrollToTop() {
+      window.parent.postMessage({
+        type: 'eddmon-charte-scroll-top'
+      }, '*');
+    }
+
+    function updateProgress() {
+      const progressBar = document.getElementById('progressBar');
+      progressBar.className = `progress-bar step-${currentStep}`;
+
+      document.querySelectorAll('.progress-step').forEach((step, index) => {
+        const stepNum = index + 1;
+        if (stepNum < currentStep) {
+          step.classList.add('completed');
+          step.classList.remove('active');
+        } else if (stepNum === currentStep) {
+          step.classList.add('active');
+          step.classList.remove('completed');
+        } else {
+          step.classList.remove('active', 'completed');
+        }
+      });
+
+      document.querySelectorAll('.form-step').forEach(step => {
+        step.classList.remove('active');
+      });
+      document.querySelector(`.form-step[data-step="${currentStep}"]`).classList.add('active');
+      
+      // Envoie la nouvelle hauteur après le changement d'étape
+      setTimeout(sendHeight, 100);
+    }
+
+    function nextStep() {
+      if (currentStep < 5) {
+        currentStep++;
+        updateProgress();
+        scrollToTop();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        currentStep--;
+        updateProgress();
+        scrollToTop();
+      }
+    }
+
+    document.getElementById('charteForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Envoi en cours...';
+
+      // Récupération des disponibilités
+      const disponibilites = [];
+      document.querySelectorAll('.dispo-btn:not(.inactive)').forEach(btn => {
+        disponibilites.push(btn.getAttribute('data-dispo'));
+      });
+
+      // Récupération des villes
+      const villes = [];
+      document.querySelectorAll('input[name="villes"]:checked').forEach(checkbox => {
+        villes.push(checkbox.value);
+      });
+
+      const formData = {
+        email: document.getElementById('email').value,
+        disponibilites: disponibilites.join(', '),
+        villes: villes.join(', '),
+        etape1_accept: document.getElementById('accept1').checked,
+        etape2_accept: document.getElementById('accept2').checked,
+        etape3_accept: document.getElementById('accept3').checked,
+        etape4_accept: document.getElementById('accept4').checked,
+        etape5_accept: document.getElementById('accept5').checked,
+        date_validation: new Date().toISOString(),
+        timestamp: new Date().toLocaleString('fr-FR')
+      };
+
+      try {
+        await fetch('https://n8n.srv791471.hstgr.cloud/webhook/646e3775-ca46-48d4-84f9-d52f0401fe62', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData)
+        });
+
+        const now = new Date().toLocaleString('fr-FR');
+        document.getElementById('stamp').textContent = `Validé — ${now}`;
+
+        document.getElementById('mainHeader').style.display = 'none';
+        document.getElementById('progressBar').style.display = 'none';
+        document.getElementById('charteForm').style.display = 'none';
+        document.getElementById('successMessage').classList.add('active');
+
+        scrollToTop();
+        setTimeout(sendHeight, 100);
+      } catch (error) {
+        alert('Une erreur est survenue. Veuillez réessayer.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Valider la charte ✓';
+      }
+    });
+  </script>
+</body>
+</html>
